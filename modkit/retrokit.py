@@ -298,6 +298,19 @@ def install_addon(root, source, replace=False):
     return destination
 
 
+def _steam_for_selected_install(root):
+    """Use Steam's normal launch setup only when its app manifest selects this game."""
+    manifest = root.parent.parent / f'appmanifest_{APP_ID}.acf'
+    try:
+        text = manifest.read_text(encoding='utf-8-sig')
+    except (OSError, UnicodeError):
+        return None
+    folder = re.search(r'"installdir"\s+"([^"]+)"', text, re.I)
+    if not folder or (root.parent / folder.group(1)).resolve() != root:
+        return None
+    return next((steam/'steam.exe' for steam in _steam_roots() if (steam/'steam.exe').is_file()), None)
+
+
 def launch(root, use_migi=False, extra=(), proton=None):
     """Launch genuine Steam client's binary with the proper working directory.
 
@@ -358,7 +371,8 @@ def launch(root, use_migi=False, extra=(), proton=None):
     else:
         if os.name != 'nt' and not os.access(exe, os.X_OK):
             raise ValueError('Native CS:GO launcher is not executable. Repair the game through Steam.')
-        cmd = [str(exe), *args]
+        steam = _steam_for_selected_install(root) if os.name == 'nt' and not use_migi else None
+        cmd = [str(steam), '-applaunch', APP_ID, *args] if steam else [str(exe), *args]
     print('Starting:', subprocess.list2cmdline(cmd) if os.name == 'nt' else ' '.join(cmd))
     return popen_external(cmd, cwd=str(root), env=env)
 

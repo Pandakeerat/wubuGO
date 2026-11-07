@@ -504,10 +504,10 @@ class Studio(ExtraPages, tk.Tk):
 
     def _launch_page(self):
         self._heading('Game launcher', 'Start CS:GO',
-                      'Launches the genuine Steam csgo.exe. Never launches a dummy server or a mock game.')
+                      'Windows uses Steam for a matching standalone installation; direct/MIGI launches isolate the manager’s DLL search settings.')
         s = self._area()
         text(s, 'BASE GAME', 13, 'bold').pack(anchor='w')
-        text(s, 'Works without MIGI. Always starts with -insecure -steam -console. Steam must be running.',
+        text(s, 'Works without MIGI. Requests -insecure, LAN mode and a local map through Steam when detected.',
              10, fg=C['muted']).pack(anchor='w', pady=(8, 12))
         self._row_buttons(s, [('PLAY CS:GO', self.play_vanilla, 'primary'),
                               ('PLAY DUST II WITH BOTS', lambda: self.play_vanilla('de_dust2'), 'secondary'),

@@ -114,3 +114,24 @@ class GameCoreTests(unittest.TestCase):
              patch.object(retrokit.subprocess,'Popen') as proc:
             retrokit.launch(game)
             self.assertTrue(proc.call_args.kwargs['env']['PATH'].startswith(str(game/'bin')+';'))
+
+    def test_windows_normal_launch_uses_matching_steam_install(self):
+        steam=self.root/'Steam';steam.mkdir();(steam/'steam.exe').touch()
+        game=fake_game(self.root/'library/steamapps/common/csgo legacy')
+        (game.parent.parent/'appmanifest_4465480.acf').write_text('"installdir" "csgo legacy"')
+        with patch.object(retrokit,'os',SimpleNamespace(name='nt')), \
+             patch.object(retrokit,'_steam_roots',return_value=[steam]), \
+             patch.object(retrokit,'running_game_processes',return_value=[]), \
+             patch.object(retrokit.subprocess,'Popen') as proc:
+            retrokit.launch(game)
+        cmd=proc.call_args.args[0]
+        self.assertEqual(cmd[:3],[str(steam/'steam.exe'),'-applaunch','4465480'])
+        self.assertIn('-insecure',cmd)
+        self.assertEqual(cmd[-4:],['+sv_lan','1','+map','de_dust2'])
+
+    def test_steam_cannot_launch_a_different_selected_install(self):
+        steam=self.root/'Steam';steam.mkdir();(steam/'steam.exe').touch()
+        game=fake_game(self.root/'library/steamapps/common/csgo legacy')
+        (game.parent.parent/'appmanifest_4465480.acf').write_text('"installdir" "another game"')
+        with patch.object(retrokit,'_steam_roots',return_value=[steam]):
+            self.assertIsNone(retrokit._steam_for_selected_install(game))
