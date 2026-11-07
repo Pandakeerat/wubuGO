@@ -63,3 +63,9 @@ class PackagingTests(unittest.TestCase):
         shortcut=self.data/'applications/wubugo.desktop';shortcut.write_text('user changed')
         self.assertEqual(self.run_script(self.data/'wubugo-app/uninstall.sh').returncode,0)
         self.assertEqual(shortcut.read_text(),'user changed')
+
+class SourcePortabilityTests(unittest.TestCase):
+    def test_no_case_collisions_in_release_paths(self):
+        # Both a Python freeze spec and an RPM recipe must survive Windows checkout.
+        paths=[p.relative_to(ROOT).as_posix() for p in (ROOT/'packaging').rglob('*') if p.is_file() and '__pycache__' not in p.parts]
+        self.assertEqual(len(paths),len({p.casefold() for p in paths}))

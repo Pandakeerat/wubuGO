@@ -27,7 +27,7 @@ if command -v rpmbuild >/dev/null 2>&1; then
     task_rpm_root="$PWD/build/rpm"
     mkdir -p "$task_rpm_root"/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
     cp dist/wubuGO-6.0.0-linux-x64-portable.tar.gz "$task_rpm_root/SOURCES/"
-    rpmbuild --define "_topdir $task_rpm_root" -bb packaging/wubugo.spec
+    rpmbuild --define "_topdir $task_rpm_root" -bb packaging/wubugo-rpm.spec
     find "$task_rpm_root/RPMS" -name '*.rpm' -exec cp '{}' dist/ \;
 fi
 .build-venv/bin/python packaging/checksums.py dist
