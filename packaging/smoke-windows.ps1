@@ -2,8 +2,9 @@
 # Runs only on the disposable Windows runner; never installs or launches a game.
 $ErrorActionPreference = 'Stop'
 $Root = Split-Path $PSScriptRoot -Parent
+$env:WUBUGO_LOADER_PROBE_DIR = Join-Path $Root 'build\loader-probe'
 if ($env:CI -ne 'true') { throw 'This acceptance script is intended for a disposable CI runner.' }
-$Installer = Join-Path $Root 'dist\wubuGO-6.0.0-windows-x64-setup.exe'
+$Installer = Join-Path $Root 'dist\wubuGO-6.0.1-windows-x64-setup.exe'
 if (!(Test-Path -LiteralPath $Installer)) { throw 'Build the Windows installer first.' }
 $Sandbox = Join-Path $env:RUNNER_TEMP ('wubuGO installer test ' + [guid]::NewGuid().ToString('N'))
 $InstallDir = Join-Path $Sandbox 'Installed Application'

@@ -42,7 +42,8 @@ def check_report(path, *, gui):
         raise ValueError(f'Native acceptance report failed: {path}')
     if gui and (report.get('isolated_state') is not True or report.get('network_used') is not False
                 or report.get('generated_weapons') != 33 or set(report.get('pages', [])) != PAGES
-                or report.get('assets', {}).get('ok') is not True):
+                or report.get('assets', {}).get('ok') is not True
+                or report.get('external_process', {}).get('loader_isolation_verified') is not True):
         raise ValueError(f'Native GUI report is incomplete: {path}')
     return report
 
@@ -142,7 +143,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     for name in ('windows', 'fedora', 'output', 'repository', 'tag', 'source-commit', 'run-id'):
         parser.add_argument('--' + name, required=True)
-    parser.add_argument('--version', default='6.0.0')
+    parser.add_argument('--version', default='6.0.1')
     args = vars(parser.parse_args())
     root = Path(__file__).resolve().parents[1]
     prepare(args.pop('windows'), args.pop('fedora'), args.pop('output'), root=root, **args)

@@ -1,3 +1,13 @@
+# 6.0.1 launcher hotfix
+
+- Clear the manager's inherited Windows DLL search directory while starting external software, then restore it for the GUI runtime.
+- Restore original Linux library paths and remove bundled paths from external child environments.
+- Use Steam -applaunch for matching Windows standalone installations, preserving offline flags; keep direct/MIGI launch available when appropriate.
+- Prefer the game's own Windows bin directory over unrelated inherited PATH entries.
+- Test real conflicting native DLLs from the frozen Windows launcher; verify startup failures and parent restoration.
+- Report process creation separately from verified game startup, and label detected files without claiming in-game readiness.
+- Steam/game files are not repaired, replaced or downloaded by this fix. Actual CS:GO startup still requires user verification.
+
 # 6.0 development release
 
 - Preserved the Python GUI and added pastel-orange branding, a logo, Setup/Downloads/Settings/Integrity pages.

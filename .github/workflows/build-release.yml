@@ -9,7 +9,7 @@ on:
       release_tag:
         description: Existing draft release tag matching this app version
         type: string
-        default: v6.0.0-rc.1
+        default: v6.0.1-rc.1
   pull_request:
   push:
     tags: ['v*']

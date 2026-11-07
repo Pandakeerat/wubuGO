@@ -1,5 +1,5 @@
 ; Compile after packaging/build.ps1 produces the frozen application.
-#define AppVersion "6.0.0"
+#define AppVersion "6.0.1"
 [Setup]
 AppId={{938583B8-D1F5-4634-B24C-BF9F463001BE}
 AppName=wubuGO

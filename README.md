@@ -4,7 +4,7 @@ Python/Tk launcher for Windows and Linux, with a pastel-orange `#FFCE9F` interfa
 
 ## Download the test release
 
-[Windows installer](https://github.com/wubu-codink/wubuGO/releases/download/v6.0.0-rc.1/wubuGO-6.0.0-windows-x64-setup.exe) · [Fedora RPM](https://github.com/wubu-codink/wubuGO/releases/download/v6.0.0-rc.1/wubugo-6.0.0-1.fc43.x86_64.rpm) · [All downloads and checksums](https://github.com/wubu-codink/wubuGO/releases/tag/v6.0.0-rc.1)
+[Windows installer](https://github.com/wubu-codink/wubuGO/releases/download/v6.0.1-rc.1/wubuGO-6.0.1-windows-x64-setup.exe) · [Fedora RPM](https://github.com/wubu-codink/wubuGO/releases/download/v6.0.1-rc.1/wubugo-6.0.1-1.fc43.x86_64.rpm) · [All downloads and checksums](https://github.com/wubu-codink/wubuGO/releases/tag/v6.0.1-rc.1)
 
 ![wubuGO launcher](docs/gui-v6.png)
 

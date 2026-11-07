@@ -1,6 +1,6 @@
 wubuGO 6.0
 
-Bundled Windows build: run wubuGO.exe or install using wubuGO-6.0.0-windows-x64-setup.exe.
+Bundled Windows build: run wubuGO.exe or install using wubuGO-6.0.1-windows-x64-setup.exe.
 Bundled Linux build: run ./wubuGO (from a graphical session).
 Source checkout: Python 3.10+ with Tkinter, then python -m launcher.app.
 

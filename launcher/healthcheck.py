@@ -35,6 +35,8 @@ def run(destination):
                 report['pages'].append(page)
             report['tk_version']=str(app.tk.call('info','patchlevel'))
             report['logo_dimensions']=[app.logo_image.width(),app.logo_image.height()]
+            from .loader_selftest import verify_external_loader
+            report['external_process']=verify_external_loader()
             report['ok']=True
         except Exception:
             report['error']=traceback.format_exc()

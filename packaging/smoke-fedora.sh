@@ -12,7 +12,7 @@ if ! grep -q '^ID=fedora$' /etc/os-release; then
     exit 1
 fi
 task_root="$PWD"
-task_archive="$task_root/dist/wubuGO-6.0.0-linux-x64-portable.tar.gz"
+task_archive="$task_root/dist/wubuGO-6.0.1-linux-x64-portable.tar.gz"
 mapfile -t task_rpms < <(find "$task_root/dist" -maxdepth 1 -name 'wubugo-*.x86_64.rpm' -type f)
 if [[ ! -f "$task_archive" || "${#task_rpms[@]}" != '1' ]]; then
     printf '%s\n' 'Build exactly one portable archive and RPM before acceptance testing.' >&2

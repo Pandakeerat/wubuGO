@@ -9,13 +9,13 @@ without those optional tools. Game setup remains explicit and reversible.
 
 ## Windows x64
 
-On a Windows build machine install Python 3.13 x64 with Tcl/Tk, Inno Setup 6 and
+On a Windows build machine install Python 3.13 x64 with Tcl/Tk, Visual Studio C++ Build Tools (x64), Inno Setup 6 and
 run `powershell -ExecutionPolicy Bypass -File packaging\build.ps1` from the project
 root. This installs pinned build-only PyInstaller into `.build-venv`, runs tests,
 freezes the app and compiles an Inno installer. Build internet is required for the
 build dependency; users of the resulting artifacts need no Python/downloads.
 
-Outputs: `dist/wubuGO-6.0.0-windows-x64-setup.exe`, portable ZIP and SHA256SUMS.
+Outputs: `dist/wubuGO-6.0.1-windows-x64-setup.exe`, portable ZIP and SHA256SUMS.
 The installer runs without admin rights, registers uninstall and creates shortcuts.
 It installs only the manager into `%LOCALAPPDATA%\Programs\wubuGO`. User settings
 and backups live in `%LOCALAPPDATA%\wubuGO` and survive app uninstall/upgrade.
@@ -67,6 +67,8 @@ the applicable redistribution terms before publishing artifacts.
 
 ## Publish a verified prerelease
 
-Create the matching draft release first. From Actions, manually run **Build and test installers** on `main`, set `publish_release` to true, and supply its draft tag (initially `v6.0.0-rc.1`). Both native build/installation jobs must pass. The separate publisher job verifies their checksums/reports, uploads the runtime packages plus source/evidence archives, publishes the prerelease, then updates `releases/update-manifest.json` with the actual file hashes. Normal pull-request builds cannot publish.
+Create the matching draft release first. From Actions, manually run **Build and test installers** on `main`, set `publish_release` to true, and supply its draft tag (initially `v6.0.1-rc.1`). Both native build/installation jobs must pass. The separate publisher job verifies their checksums/reports, uploads the runtime packages plus source/evidence archives, publishes the prerelease, then updates `releases/update-manifest.json` with the actual file hashes. Normal pull-request builds cannot publish.
 
 Only the publisher has `contents: write`; it uses GitHub's scoped Actions token and requires no personal token or repository secret. It rejects a changed main branch or an already published release. The generated feed update is a normal fast-forward commit, never a force push. If a later feed push fails, the previous feed remains in place; the published packages stay downloadable and the failed run requires maintainer attention.
+
+The Windows build compiles a small native loader regression fixture outside the release bundle. Every frozen and installed self-test must show that a raw child selects an intentionally wrong DLL, the sanitized child selects its own correct DLL, and the manager's search directory is restored. The fixture is not shipped as a game dependency and never loads game files. Linux self-tests verify restoration of the external child's library path.

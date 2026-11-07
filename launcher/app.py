@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import sys
 import threading
+import time
 import webbrowser
 from pathlib import Path
 import tkinter as tk
@@ -19,6 +20,7 @@ from modkit.weapon_balance import create_2016_addon
 from modkit.schema_audit import audit
 from modkit.bridge_manager import fetch_bridge
 from modkit.panorama_ui import install_to_bridge, restore_bridge
+from modkit.external_process import popen_external
 from modkit.asset_integrity import verify_assets
 from .runtime import VERSION, resource_root, state_root, atomic_json, load_settings
 from .pages import ExtraPages
@@ -277,10 +279,25 @@ class Studio(ExtraPages, tk.Tk):
         except queue.Empty:
             pass
         self._refresh_download_rows()
-        if self.game_process and self.game_process.poll() is not None:
-            self.game_process = None
-            if self.presence: self.presence.set_activity('In launcher')
+        self._poll_game_process()
         self.after(120, self._drain)
+
+    def _poll_game_process(self):
+        if not self.game_process:
+            return
+        code = self.game_process.poll()
+        elapsed = time.monotonic() - self.game_started_at
+        if code is None:
+            return
+        self.game_process = None
+        if self.presence:
+            self.presence.set_activity('In launcher')
+        detail = f'Process exited with code 0x{code & 0xffffffff:08X} after {elapsed:.1f}s.'
+        self._log(detail + ' In-game startup was not verified.')
+        if code != 0 and elapsed < 30:
+            messagebox.showerror('Game failed to start', detail +
+                '\n\nIf Steam starts the game successfully, keep the game DLLs unchanged. '
+                'Install the latest wubuGO build and retry. The Diagnostics log records this exit code.')
 
     def _operation_progress(self, done, total, relative):
         self.events.put(('progress', 'file progress', (done,total,relative)))
@@ -381,15 +398,15 @@ class Studio(ExtraPages, tk.Tk):
         status = self._installed()
         chips = tk.Frame(self.content, bg=C['bg'])
         chips.pack(fill='x', padx=29, pady=(0, 12))
-        values = [('STEAM GAME', bool(self.game)), ('2016 WEAPON DATA', self._has_source()),
-                  ('MIGI INSTALLED', status.get('migi_initialized', False)),
-                  ('CLASSIC HUD BRIDGE', (self.bridge_path / 'Launch.cmd').is_file())]
-        for idx, (label, yes) in enumerate(values):
+        values = [('STEAM GAME', bool(self.game), 'FOUND'), ('2016 WEAPON DATA', self._has_source(), 'VALID SOURCE'),
+                  ('MIGI FILES', status.get('migi_initialized', False), 'FILES FOUND'),
+                  ('HUD BRIDGE FILES', (self.bridge_path / 'Launch.cmd').is_file(), 'FILES FOUND')]
+        for idx, (label, yes, found) in enumerate(values):
             block = tk.Frame(chips, bg=C['panel2'], padx=17, pady=14)
             block.grid(row=0, column=idx, sticky='ew', padx=(0, 8 if idx < 3 else 0))
             chips.columnconfigure(idx, weight=1)
             text(block, label, 8, 'bold', C['muted']).pack(anchor='w')
-            text(block, 'READY' if yes else 'NEEDS SETUP', 12, 'bold', C['green'] if yes else C['gold']).pack(anchor='w', pady=(10, 0))
+            text(block, found if yes else 'NEEDS SETUP', 12, 'bold', C['green'] if yes else C['gold']).pack(anchor='w', pady=(10, 0))
         hero = self._area()
         text(hero, 'QUICK SETUP', 10, 'bold', C['gold']).pack(anchor='w')
         text(hero, 'One click for the files we can install safely', 19, 'bold').pack(anchor='w', pady=(7, 8))
@@ -487,10 +504,10 @@ class Studio(ExtraPages, tk.Tk):
 
     def _launch_page(self):
         self._heading('Game launcher', 'Start CS:GO',
-                      'Launches the genuine Steam csgo.exe. Never launches a dummy server or a mock game.')
+                      'Windows uses Steam for a matching standalone installation; direct/MIGI launches isolate the manager’s DLL search settings.')
         s = self._area()
         text(s, 'BASE GAME', 13, 'bold').pack(anchor='w')
-        text(s, 'Works without MIGI. Always starts with -insecure -steam -console. Steam must be running.',
+        text(s, 'Works without MIGI. Requests -insecure, LAN mode and a local map through Steam when detected.',
              10, fg=C['muted']).pack(anchor='w', pady=(8, 12))
         self._row_buttons(s, [('PLAY CS:GO', self.play_vanilla, 'primary'),
                               ('PLAY DUST II WITH BOTS', lambda: self.play_vanilla('de_dust2'), 'secondary'),
@@ -596,7 +613,7 @@ class Studio(ExtraPages, tk.Tk):
         if os.name == 'nt':
             os.startfile(str(p))
         else:
-            subprocess.Popen(['xdg-open', str(p)])
+            popen_external(['xdg-open', str(p)])
 
     def open_game_folder(self):
         try:
@@ -612,7 +629,7 @@ class Studio(ExtraPages, tk.Tk):
                 raise ValueError('MIGI is not installed. Use GET MIGI3 to download the official app and place migi.exe next to csgo.exe.')
             if os.name != 'nt':
                 raise ValueError('MIGI3 is a Windows executable; open it on Windows.')
-            subprocess.Popen([str(exe)], cwd=str(root))
+            popen_external([str(exe)], cwd=str(root))
             self._log('Opened MIGI. Click Build / Update Build after changing addons.')
         except (ValueError, OSError) as exc:
             messagebox.showerror('MIGI', str(exc))
@@ -625,8 +642,9 @@ class Studio(ExtraPages, tk.Tk):
             extra = ['+map', map_name] if map_name else []
             child = launch(root, use_migi=migi, extra=extra, proton=self.settings.get('proton') or None)
             self.game_process = child
-            if self.presence: self.presence.set_activity('Playing a local game', 'Offline / private · -insecure')
-            self._log(f'Launched Steam CS:GO (PID {child.pid})' + (' with MIGI.' if migi else '.'))
+            self.game_started_at = time.monotonic()
+            if self.presence: self.presence.set_activity('Game start requested', 'Offline / private · -insecure')
+            self._log(f'Game start requested (PID {child.pid})' + (' with MIGI.' if migi else '.') + ' Startup not verified.')
         except (ValueError, OSError) as exc:
             messagebox.showerror('Could not launch CS:GO', str(exc))
 
