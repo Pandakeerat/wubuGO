@@ -1,0 +1,54 @@
+{
+  "ok": true,
+  "network_used": false,
+  "game_started": false,
+  "pages": [
+    "Overview",
+    "Setup",
+    "Weapons",
+    "Classic UI",
+    "Launch",
+    "Downloads",
+    "Settings",
+    "Integrity",
+    "Diagnostics"
+  ],
+  "version": "6.0.0",
+  "assets": {
+    "ok": true,
+    "checked": 10,
+    "failures": []
+  },
+  "source": {
+    "version": "1.35.4.4",
+    "date": "2016-08-03",
+    "weapon_item_count": 33,
+    "source_sha256": "3f953c057bfa83ebdbec79229c939aa80a6c3b69fc090c31b076fa01516356cd",
+    "provenance_verified": true,
+    "weapon_examples": [
+      "AK-47",
+      "AUG",
+      "AWP",
+      "CZ75-Auto",
+      "Desert Eagle",
+      "Dual Berettas",
+      "FAMAS",
+      "Five-SeveN",
+      "G3SG1",
+      "Galil AR"
+    ],
+    "scope": "complete",
+    "suitable_as_2016_weapon_source": true,
+    "notes": [
+      "2016 weapon statistics (not items_game schema).",
+      "Full upstream snapshot."
+    ]
+  },
+  "generated_weapons": 33,
+  "isolated_state": true,
+  "tk_version": "8.6.15",
+  "logo_dimensions": [
+    1254,
+    1254
+  ]
+}

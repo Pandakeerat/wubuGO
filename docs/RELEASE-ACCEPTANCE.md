@@ -11,7 +11,15 @@ This is a development candidate, not a certified cross-platform game restoration
 - Real HTTPS download of pinned MIGI to a scratch cache; 8,322,321 bytes, expected SHA-256 matched. Payload never run and not redistributed.
 - Linux bundled executable GUI startup on Debian 13. This is not execution on Fedora or Windows.
 
-## Required before calling a platform release supported
+## Native release-candidate evidence
+
+[CI run 42317189553](https://github.com/Pandakeerat/wubuGO/actions/runs/42317189553), source commit `92f56b8d3a857fa9687b00b31773b27b0ba568f8`, passed both native jobs. Windows ran 86 tests with 8 platform-specific skips; Fedora ran all 86. Frozen GUI tests verified ten asset hashes, all nine pages and generation of 33 weapon overrides without network access or launching a game.
+
+Windows Server 2025: built portable ZIP and Inno installer; installed/reinstalled in a path with spaces; checked shortcuts/uninstall registration; ran installed GUI with Python absent from PATH; uninstalled and retained seeded user state.
+
+Fedora 43: built tar and RPM; installed/self-tested/uninstalled portable helper and actual RPM; retained seeded state. JSON reports are in `docs/release-6.0/`.
+
+## Remaining real-machine and game acceptance
 
 For each supported Windows/Fedora version, record OS version, architecture, Python/toolchain, Steam package type, game build, MIGI/Bridge commit and test results. Keep game backups outside the installer directory.
 

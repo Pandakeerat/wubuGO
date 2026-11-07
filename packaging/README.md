@@ -45,8 +45,7 @@ normal `dnf install ./wubugo-*.rpm` workflow. RPM uninstall retains user state.
 `.github/workflows/build-release.yml` builds native Windows and Fedora artifacts
 on a pull request, manual dispatch or a version tag, runs tests and uploads build artifacts. Each build must pass the frozen application’s offline `--self-test` on a real/virtual display before packaging; Windows uses its desktop session and Fedora uses Xvfb. The self-test renders every GUI page, validates bundled assets and builds the 33-weapon addon, writing `frozen-selftest.json`. It does not test the actual game. It
 does not publish releases, push source or install anything on the user's PC.
-This pipeline is provided as source until actually run; passing Python tests here
-is not proof that Windows installation or game integration works.
+Native Windows and Fedora 43 CI has passed for the first release candidate, including actual installer self-tests. See the root README and docs/release-6.0 for evidence. Game integration remains unverified.
 
 Before distribution, test fresh installation, no-network launch, paths with spaces,
 upgrade with retained settings, uninstall with retained backups, GUI icons and all

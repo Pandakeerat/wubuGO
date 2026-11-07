@@ -1,6 +1,6 @@
 wubuGO 6.0
 
-Bundled Windows build: run wubuGO.exe or install using wubuGO-6.0-setup.exe.
+Bundled Windows build: run wubuGO.exe or install using wubuGO-6.0.0-windows-x64-setup.exe.
 Bundled Linux build: run ./wubuGO (from a graphical session).
 Source checkout: Python 3.10+ with Tkinter, then python -m launcher.app.
 
@@ -15,5 +15,5 @@ LAUNCH uses -insecure, LAN mode and a local map. Read README before using mods.
 MIGI and Bridge are Windows-only upstream tools. Native Linux injection is not
 supported. In-game HUD/menu and weapon behavior are not verified by local tests.
 
-Build recipes are not compiled/tested Windows or Fedora installers. Read the
-release acceptance record to see exactly which checks have actually run.
+Release binaries passed native Windows/Fedora installer and GUI checks. Source
+recipes alone are not installers. Read the README and native self-test reports.

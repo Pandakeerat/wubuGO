@@ -2,9 +2,17 @@
 
 Python/Tk launcher for Windows and Linux, with a pastel-orange `#FFCE9F` interface. It prepares historical weapon overrides and local settings for the standalone Steam Source 1 CS:GO client. It is not CS2 and does not restore the original Scaleform runtime or 2016 engine code.
 
+## Download the test release
+
+[Windows installer](https://github.com/Pandakeerat/wubuGO/releases/download/v6.0.0-rc.1/wubuGO-6.0.0-windows-x64-setup.exe) · [Fedora RPM](https://github.com/Pandakeerat/wubuGO/releases/download/v6.0.0-rc.1/wubugo-6.0.0-1.fc43.x86_64.rpm) · [All downloads and checksums](https://github.com/Pandakeerat/wubuGO/releases/tag/v6.0.0-rc.1)
+
+![wubuGO launcher](docs/gui-v6.png)
+
+The launcher and installer workflows passed native Windows/Fedora CI. In-game restoration remains unverified; see the compatibility table below. This is a prerelease.
+
 ## Start
 
-A **bundled Windows release** runs `wubuGO.exe`; a **bundled Linux release** runs `./wubuGO`. Both package the manager's Python/Tk runtime. Windows installer and Fedora RPM/portable build instructions are in [packaging/README.md](packaging/README.md). Do not mistake source code or a build recipe for a tested installer.
+A **bundled Windows release** runs `wubuGO.exe`; a **bundled Linux release** runs `./wubuGO`. Both package the manager's Python/Tk runtime. Windows installer and Fedora RPM/portable build instructions are in [packaging/README.md](packaging/README.md). Use a release download for the bundled runtime; GitHub’s source ZIP requires Python/Tk.
 
 From source, use Python 3.10+ with Tkinter: `python -m launcher.app`. On Fedora, `START_FEDORA.sh` explains missing system prerequisites. The app uses only the standard library at runtime; no pip downloads at first launch.
 
@@ -42,13 +50,15 @@ Uninstalling the manager leaves user settings, downloads, game changes and recov
 | --- | --- |
 | Offline assets, generation, backups, recovery, downloader, settings, detection command construction | Automated local tests pass |
 | Linux source GUI, all nine pages, synthetic end-to-end workflows | Graphically tested with real Tk 8.6 |
-| Bundled Linux runtime | Built and GUI-started on Debian 13; **not Fedora-tested** |
-| Windows executable / Inno installer | Build pipeline provided; **not compiled or executed on Windows here** |
-| Fedora RPM / portable build pipeline | Provided; requires native Fedora build and execution testing |
+| Bundled Linux runtime | Built and GUI-tested on Fedora 43; portable installation/uninstallation passed |
+| Windows executable / Inno installer | Native Windows Server 2025 CI passed: build, install/reinstall, shortcuts, isolated GUI test, uninstall and state retention |
+| Fedora RPM / portable packages | Native Fedora 43 CI passed: build, install, isolated GUI tests, uninstall and state retention |
 | Actual game, Steam library discovery on real PCs, Proton game runtime | **Unverified** |
 | MIGI/Bridge HUD, menu event handlers and firearm effects | **Unverified in-game** |
 | Native Linux MIGI/Bridge injection | **Unsupported**; upstream uses a Windows x86 injector |
 | Real Discord display | IPC mock-tested; needs Discord + a real Application ID |
+
+Native build and installation evidence: [CI run](https://github.com/Pandakeerat/wubuGO/actions/runs/42317189553) and [self-test reports](docs/release-6.0). These are clean CI systems, not tests on your PC or against an actual game.
 
 See [Bridge and weapon audit](docs/BRIDGE-AND-WEAPONS.md), [downloads/update API](docs/DOWNLOADS.md), [rich presence](docs/PRESENCE.md), and [release acceptance](docs/RELEASE-ACCEPTANCE.md).
 
