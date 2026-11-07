@@ -173,3 +173,29 @@ def verify_installed_settings(root):
     if not data or not data['managed'] or _digest(target.read_bytes()) != data['sha256']:
         raise ValueError('Installed preferences are untracked or edited; restore/reinstall them before launching through wubuGO')
     return True
+
+
+def read_installed_settings(root):
+    """Read only intact, manager-owned preferences; never interpret foreign cfgs."""
+    root,target,receipt = _paths(root)
+    data = _load_receipt(receipt)
+    if not target.is_file() or not data or not data['managed']:
+        return None
+    content = target.read_bytes()
+    if _digest(content) != data['sha256']:
+        raise ValueError('Preferences were edited outside wubuGO; saved values were not changed')
+    text = content.decode('utf-8')
+    if not text.startswith(HEADER):
+        raise ValueError('Tracked preferences have an invalid header')
+    values = {}
+    for line in text[len(HEADER):].splitlines():
+        match = re.fullmatch(r'([A-Za-z0-9_]+) "([^"\r\n]+)"', line)
+        if not match or match[1] not in DEFAULTS or match[1] in values:
+            raise ValueError('Tracked preferences do not match the supported setting format')
+        values[match[1]] = match[2]
+    if set(values) != set(DEFAULTS):
+        raise ValueError('Tracked preferences are missing supported settings')
+    result = validate_settings(values)
+    if render_settings(result).encode('utf-8') != content:
+        raise ValueError('Tracked preferences are not a generated settings file')
+    return result

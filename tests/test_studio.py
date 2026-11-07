@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def fake_game(root):
+    root = Path(root).resolve()
     root.mkdir(parents=True,exist_ok=True)
     (root / 'csgo').mkdir(exist_ok=True)
     (root / 'csgo.exe').write_bytes(b'MZ synthetic')
@@ -106,7 +107,7 @@ class StudioTests(unittest.TestCase):
 
     def test_game_launch_command_insecure(self):
         game=fake_game(self.base/'csgo legacy')
-        with patch('modkit.retrokit.subprocess.Popen') as popen:
+        with patch('modkit.retrokit.running_game_processes', return_value=[]), patch('modkit.retrokit.subprocess.Popen') as popen:
             launch(game,False,['+map','de_dust2'])
         cmd=popen.call_args.args[0]
         self.assertIn('-insecure',cmd)

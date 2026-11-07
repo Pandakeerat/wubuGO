@@ -9,7 +9,8 @@ import tkinter as tk
 from pathlib import Path
 from tkinter import ttk, filedialog, messagebox
 import webbrowser
-from .runtime import VERSION, state_root, atomic_json
+from .runtime import (VERSION, state_root, atomic_json, DEFAULT_UPDATE_MANIFEST,
+                      DEFAULT_UPDATE_HOSTS)
 
 class ExtraPages:
     def _setup_page(self):
@@ -143,13 +144,13 @@ class ExtraPages:
 
     def check_app_update(self):
         from modkit.downloads import check_update
-        url=self.settings.get('update_manifest','').strip()
+        url=self.settings.get('update_manifest',DEFAULT_UPDATE_MANIFEST).strip()
         if not url:
-            messagebox.showinfo('Update source not configured',
-                'No official release server has been published. Settings can accept an HTTPS release manifest from a publisher you trust. No automatic update source is invented.');return
+            messagebox.showinfo('Update checks disabled',
+                'Set a trusted HTTPS release manifest in Settings to enable explicit update checks. The default feed is the wubuGO GitHub repository.');return
         def action():
             from urllib.parse import urlsplit
-            hosts={urlsplit(url).hostname} | {h.strip() for h in self.settings.get('update_hosts','').split(',') if h.strip()}
+            hosts={urlsplit(url).hostname} | {h.strip() for h in self.settings.get('update_hosts',DEFAULT_UPDATE_HOSTS).split(',') if h.strip()}
             release=check_update(url,current_version=VERSION,trusted_hosts=hosts)
             atomic_json(state_root()/'available-update.json',release)
             return 'Release metadata saved. Use STAGE AVAILABLE UPDATE to download it; no code is run.'
@@ -172,6 +173,8 @@ class ExtraPages:
         self._heading('Preferences','Make it yours','Settings are stored in your user data directory and survive app upgrades.')
         s=self._area()
         text(s,'GAME PREFERENCES',12,'bold').pack(anchor='w')
+        text(s,'Values below are proposed preferences. Save installs them; restoring an original external cfg leaves its contents intact.',
+             9,fg=C['muted'],wraplength=780).pack(anchor='w',pady=(8,8))
         self.pref_entries={}
         for key,default in DEFAULTS.items():
             row=tk.Frame(s,bg=C['panel']);row.pack(fill='x',pady=4)
@@ -191,7 +194,8 @@ class ExtraPages:
                           ('update_hosts','Additional trusted update asset hosts, comma-separated (optional)')]:
             text(s,label,10).pack(anchor='w',pady=(12,4))
             entry=tk.Entry(s,bg=C['deep'],fg=C['text'],insertbackground=C['text'])
-            entry.insert(0,self.settings.get(key,''));entry.pack(fill='x');self.service_entries[key]=entry
+            default = DEFAULT_UPDATE_MANIFEST if key == 'update_manifest' else DEFAULT_UPDATE_HOSTS if key == 'update_hosts' else ''
+            entry.insert(0,self.settings.get(key,default));entry.pack(fill='x');self.service_entries[key]=entry
         self.discord_enabled=tk.BooleanVar(value=bool(self.settings.get('discord_enabled',False)))
         tk.Checkbutton(s,text='Enable Discord rich presence (opt in)',variable=self.discord_enabled,
                        bg=C['panel'],fg=C['text'],selectcolor=C['deep'],activebackground=C['panel']).pack(anchor='w',pady=12)
@@ -216,10 +220,21 @@ class ExtraPages:
         self._task('Install game preferences',action)
 
     def restore_preferences(self):
-        from modkit.game_settings import rollback_settings
+        from modkit.game_settings import rollback_settings, read_installed_settings
         try: root=self._require_game()
         except (ValueError,OSError) as exc: messagebox.showerror('Preferences',str(exc));return
-        self._task('Restore game preferences',lambda:str(rollback_settings(root)))
+        def action():
+            path=rollback_settings(root)
+            restored=read_installed_settings(root)
+            if restored is None:
+                self.settings.pop('preferences',None)
+                note='Original or absent preferences restored; proposed launcher values reset to defaults.'
+            else:
+                self.settings['preferences']=restored
+                note='Launcher values now match the restored preferences.'
+            self._save_settings()
+            return str(path)+'; '+note
+        self._task('Restore game preferences',action)
 
     def save_services(self):
         values={k:e.get().strip() for k,e in self.service_entries.items()}

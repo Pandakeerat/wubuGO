@@ -183,8 +183,8 @@ class Studio(ExtraPages, tk.Tk):
         self.content_id = self.scroll.create_window((0, 0), window=self.content, anchor='nw')
         self.content.bind('<Configure>', lambda e: self.scroll.configure(scrollregion=self.scroll.bbox('all')))
         self.scroll.bind('<Configure>', lambda e: self.scroll.itemconfigure(self.content_id, width=e.width))
-        self.scroll.bind('<MouseWheel>', self._wheel)
-        self.content.bind('<MouseWheel>', self._wheel)
+        # Tk wheel events include the toplevel in bindtags, not parent frames.
+        self.bind('<MouseWheel>', self._wheel, add='+')
         self.scroll.bind_all('<Button-4>', lambda e:self.scroll.yview_scroll(-3,'units'))
         self.scroll.bind_all('<Button-5>', lambda e:self.scroll.yview_scroll(3,'units'))
         self.footer = tk.Frame(self.right, bg=C['sidebar'], padx=29, pady=12)
@@ -198,7 +198,12 @@ class Studio(ExtraPages, tk.Tk):
         self._refresh_top()
 
     def _wheel(self, e):
-        self.scroll.yview_scroll(int(-1 * (e.delta / 120)), 'units')
+        if e.widget.winfo_class() in {'Text', 'Listbox', 'Treeview', 'Entry', 'TEntry',
+                                     'TCombobox', 'Spinbox', 'TSpinbox'}:
+            return
+        if e.delta:
+            steps = -int(e.delta / 120) or (-1 if e.delta > 0 else 1)
+            self.scroll.yview_scroll(steps, 'units')
 
     def _refresh_top(self):
         if self.game:

@@ -22,7 +22,7 @@ From source, use Python 3.10+ with Tkinter: `python -m launcher.app`. On Fedora,
 - Optional pinned Bridge dependency downloads, offline ZIP import and detailed local inventory. Imported or downloaded scripts are never automatically run.
 - Config backups, addon replacement recovery, rollback, running-game guards and linked-path protection.
 - Optional Discord rich presence using local IPC, no tokens or extra packages. To display **wubuGO**, create a Discord application with exactly that name and enter its public Application ID in Settings. Disabled by default.
-- Explicit update check/staging from a configured trusted HTTPS publisher. No release server is invented; checksums validate transfer, not publisher identity. No automatic code execution or replacement of a running app.
+- Explicit update check/staging from the wubuGO repository release manifest, with optional trusted publisher overrides. Nothing is checked at startup; checksums validate transfer, not publisher identity. No automatic code execution or replacement of a running app.
 
 ## Downloads and app data
 

@@ -39,10 +39,10 @@ class HardeningTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as t:
             game=fake_game(Path(t)/'game')
             for args in (['+connect','example.org'], ['+exec','unsafe.cfg'], ['+map','de_dust2;+connect x'], ['-secure']):
-                with patch('modkit.retrokit.subprocess.Popen') as proc:
+                with patch('modkit.retrokit.running_game_processes', return_value=[]), patch('modkit.retrokit.subprocess.Popen') as proc:
                     with self.assertRaises(ValueError): launch(game,extra=args)
                     proc.assert_not_called()
-            with patch('modkit.retrokit.subprocess.Popen') as proc:
+            with patch('modkit.retrokit.running_game_processes', return_value=[]), patch('modkit.retrokit.subprocess.Popen') as proc:
                 launch(game,extra=['+map','de_dust2'])
                 cmd=proc.call_args.args[0]
                 self.assertIn('-insecure',cmd)

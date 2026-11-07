@@ -81,7 +81,7 @@ class IntegrationTests(unittest.TestCase):
             current.write_bytes(b'modified');backup.write_bytes(b'original')
             real_rename=Path.rename
             def fail_backup(path,target):
-                if path==backup: raise OSError('simulated disk failure')
+                if path.resolve()==backup.resolve(): raise OSError('simulated disk failure')
                 return real_rename(path,target)
             with patch.object(Path,'rename',fail_backup):
                 with self.assertRaises(OSError):restore_bridge(root)
