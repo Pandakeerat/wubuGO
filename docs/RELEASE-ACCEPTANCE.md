@@ -13,7 +13,7 @@ This is a development candidate, not a certified cross-platform game restoration
 
 ## Native release-candidate evidence
 
-[CI run 42317189553](https://github.com/Pandakeerat/wubuGO/actions/runs/42317189553), source commit `92f56b8d3a857fa9687b00b31773b27b0ba568f8`, passed both native jobs. Windows ran 86 tests with 8 platform-specific skips; Fedora ran all 86. Frozen GUI tests verified ten asset hashes, all nine pages and generation of 33 weapon overrides without network access or launching a game.
+[CI run 42317189553](https://github.com/wubu-codink/wubuGO/actions/runs/42317189553), source commit `92f56b8d3a857fa9687b00b31773b27b0ba568f8`, passed both native jobs. Windows ran 86 tests with 8 platform-specific skips; Fedora ran all 86. Frozen GUI tests verified ten asset hashes, all nine pages and generation of 33 weapon overrides without network access or launching a game.
 
 Windows Server 2025: built portable ZIP and Inno installer; installed/reinstalled in a path with spaces; checked shortcuts/uninstall registration; ran installed GUI with Python absent from PATH; uninstalled and retained seeded user state.
 

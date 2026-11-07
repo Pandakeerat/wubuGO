@@ -3,13 +3,13 @@
   "notes": "First wubuGO development release. Windows and Fedora launcher/installer workflows passed native CI. In-game HUD, menu and weapon effects remain unverified.",
   "assets": {
     "windows-x64": {
-      "url": "https://github.com/Pandakeerat/wubuGO/releases/download/v6.0.0-rc.1/wubuGO-6.0.0-windows-x64-setup.exe",
+      "url": "https://github.com/wubu-codink/wubuGO/releases/download/v6.0.0-rc.1/wubuGO-6.0.0-windows-x64-setup.exe",
       "filename": "wubuGO-6.0.0-windows-x64-setup.exe",
       "sha256": "96953568d584956e152bfc2e90ec4efc26bc52b06e26b257b843899a53ed16a2",
       "size": 12797420
     },
     "linux-x64": {
-      "url": "https://github.com/Pandakeerat/wubuGO/releases/download/v6.0.0-rc.1/wubuGO-6.0.0-linux-x64-portable.tar.gz",
+      "url": "https://github.com/wubu-codink/wubuGO/releases/download/v6.0.0-rc.1/wubuGO-6.0.0-linux-x64-portable.tar.gz",
       "filename": "wubuGO-6.0.0-linux-x64-portable.tar.gz",
       "sha256": "bd496ea121c009aff576e2753a770365e7d82add18fd7946996c58d19a29a02b",
       "size": 19174781

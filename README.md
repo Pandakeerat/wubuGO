@@ -4,7 +4,7 @@ Python/Tk launcher for Windows and Linux, with a pastel-orange `#FFCE9F` interfa
 
 ## Download the test release
 
-[Windows installer](https://github.com/Pandakeerat/wubuGO/releases/download/v6.0.0-rc.1/wubuGO-6.0.0-windows-x64-setup.exe) · [Fedora RPM](https://github.com/Pandakeerat/wubuGO/releases/download/v6.0.0-rc.1/wubugo-6.0.0-1.fc43.x86_64.rpm) · [All downloads and checksums](https://github.com/Pandakeerat/wubuGO/releases/tag/v6.0.0-rc.1)
+[Windows installer](https://github.com/wubu-codink/wubuGO/releases/download/v6.0.0-rc.1/wubuGO-6.0.0-windows-x64-setup.exe) · [Fedora RPM](https://github.com/wubu-codink/wubuGO/releases/download/v6.0.0-rc.1/wubugo-6.0.0-1.fc43.x86_64.rpm) · [All downloads and checksums](https://github.com/wubu-codink/wubuGO/releases/tag/v6.0.0-rc.1)
 
 ![wubuGO launcher](docs/gui-v6.png)
 
@@ -58,7 +58,7 @@ Uninstalling the manager leaves user settings, downloads, game changes and recov
 | Native Linux MIGI/Bridge injection | **Unsupported**; upstream uses a Windows x86 injector |
 | Real Discord display | IPC mock-tested; needs Discord + a real Application ID |
 
-Native build and installation evidence: [CI run](https://github.com/Pandakeerat/wubuGO/actions/runs/42317189553) and [self-test reports](docs/release-6.0). These are clean CI systems, not tests on your PC or against an actual game.
+Native build and installation evidence: [CI run](https://github.com/wubu-codink/wubuGO/actions/runs/42317189553) and [self-test reports](docs/release-6.0). These are clean CI systems, not tests on your PC or against an actual game.
 
 See [Bridge and weapon audit](docs/BRIDGE-AND-WEAPONS.md), [downloads/update API](docs/DOWNLOADS.md), [rich presence](docs/PRESENCE.md), and [release acceptance](docs/RELEASE-ACCEPTANCE.md).
 
