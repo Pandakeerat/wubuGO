@@ -43,8 +43,7 @@ normal `dnf install ./wubugo-*.rpm` workflow. RPM uninstall retains user state.
 ## CI and validation
 
 `.github/workflows/build-release.yml` builds native Windows and Fedora artifacts
-on a pull request, manual dispatch or a version tag, runs tests and uploads build artifacts. Each build must pass the frozen application’s offline `--self-test` on a real/virtual display before packaging; Windows uses its desktop session and Fedora uses Xvfb. The self-test renders every GUI page, validates bundled assets and builds the 33-weapon addon, writing `frozen-selftest.json`. It does not test the actual game. It
-does not publish releases, push source or install anything on the user's PC.
+on a pull request, manual dispatch or a version tag, runs tests and uploads build artifacts. Each build must pass the frozen application’s offline `--self-test` on a real/virtual display before packaging; Windows uses its desktop session and Fedora uses Xvfb. The self-test renders every GUI page, validates bundled assets and builds the 33-weapon addon, writing `frozen-selftest.json`. It does not test the actual game or install anything on the user's PC. Ordinary pull-request runs only build and test.
 Native Windows and Fedora 43 CI has passed for the first release candidate, including actual installer self-tests. See the root README and docs/release-6.0 for evidence. Game integration remains unverified.
 
 Before distribution, test fresh installation, no-network launch, paths with spaces,
@@ -65,3 +64,9 @@ hashes and unresolved entries. Windows Python's `LICENSE.txt` includes its
 third-party runtime notices; individual DLL coverage still requires review. This
 is a notice collector, not a legal compliance claim. Review missing entries and
 the applicable redistribution terms before publishing artifacts.
+
+## Publish a verified prerelease
+
+Create the matching draft release first. From Actions, manually run **Build and test installers** on `main`, set `publish_release` to true, and supply its draft tag (initially `v6.0.0-rc.1`). Both native build/installation jobs must pass. The separate publisher job verifies their checksums/reports, uploads the runtime packages plus source/evidence archives, publishes the prerelease, then updates `releases/update-manifest.json` with the actual file hashes. Normal pull-request builds cannot publish.
+
+Only the publisher has `contents: write`; it uses GitHub's scoped Actions token and requires no personal token or repository secret. It rejects a changed main branch or an already published release. The generated feed update is a normal fast-forward commit, never a force push. If a later feed push fails, the previous feed remains in place; the published packages stay downloadable and the failed run requires maintainer attention.

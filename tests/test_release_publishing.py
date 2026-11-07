@@ -101,6 +101,43 @@ class PublisherTests(unittest.TestCase):
             self.assertFalse(any(args[:3] == ['gh', 'release', 'edit'] for args in actions))
             self.assertFalse((self.root / 'releases/update-manifest.json').exists())
 
+    def test_failed_publication_leaves_existing_feed_unchanged_and_never_pushes(self):
+        feed = self.root / 'releases/update-manifest.json'
+        feed.parent.mkdir()
+        feed.write_text('previous working update feed')
+        def action(args, **kwargs):
+            if args[:3] == ['gh', 'release', 'upload']:
+                return None
+            if args[:3] == ['gh', 'release', 'edit']:
+                raise subprocess.CalledProcessError(1, args)
+            return self.fake_run(args, **kwargs)
+        with patch.dict(os.environ, self.environment), patch.object(publisher, 'run', side_effect=action) as calls:
+            with self.assertRaises(subprocess.CalledProcessError):
+                self.invoke()
+            self.assertEqual(feed.read_text(), 'previous working update feed')
+            actions = [call.args[0] for call in calls.call_args_list]
+            self.assertFalse(any(args[:2] in [['git', 'push'], ['git', 'commit'], ['git', 'add']]
+                                 for args in actions))
+
+    def test_success_publishes_assets_before_live_feed_push(self):
+        def action(args, **kwargs):
+            if args[:3] in [['gh', 'release', 'upload'], ['gh', 'release', 'edit']]:
+                return None
+            if args[:2] == ['git', 'diff']:
+                return 'releases/update-manifest.json'
+            if args[:2] in [['git', 'config'], ['git', 'add'], ['git', 'commit'], ['git', 'push']]:
+                return None
+            return self.fake_run(args, **kwargs)
+        with patch.dict(os.environ, self.environment), patch.object(publisher, 'run', side_effect=action) as calls:
+            self.invoke()
+            actions = [call.args[0] for call in calls.call_args_list]
+            upload = next(i for i, args in enumerate(actions) if args[:3] == ['gh', 'release', 'upload'])
+            publication = next(i for i, args in enumerate(actions) if args[:3] == ['gh', 'release', 'edit'])
+            push = next(i for i, args in enumerate(actions) if args[:2] == ['git', 'push'])
+            self.assertLess(upload, publication)
+            self.assertLess(publication, push)
+            self.assertEqual((self.root / 'releases/update-manifest.json').read_text(), '{}')
+
 
 class PreparationTests(unittest.TestCase):
     def setUp(self):

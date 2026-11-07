@@ -49,8 +49,13 @@ def publish(staging, *, repository, tag, source_commit, root):
     if not files or not (staging / 'SHA256SUMS').is_file():
         raise ValueError('No verified release staging files')
     run(['gh', 'release', 'upload', tag, *map(str, files), '--repo', repository, '--clobber'])
-    # Publish the feed only after every asset is uploaded to the draft. A normal
-    # fast-forward push rejects concurrent main updates before the release is public.
+    run(['gh', 'release', 'edit', tag, '--repo', repository, '--draft=false', '--prerelease',
+         '--target', source_commit, '--title', 'wubuGO ' + tag + ' development candidate',
+         '--notes-file', str(staging / 'release-notes.md')])
+    # Advertise the new feed only after its assets are publicly available. If
+    # publication fails, the previous feed stays intact. If a concurrent main
+    # update rejects the normal push, the published release remains usable and
+    # the old live feed remains safe; no forced branch update is attempted.
     feed = root / 'releases/update-manifest.json'
     feed.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(staging / 'update-manifest.json', feed)
@@ -63,9 +68,6 @@ def publish(staging, *, repository, tag, source_commit, root):
     if changed:
         run(['git', 'commit', '-m', 'Update verified native release feed for ' + tag])
         run(['git', 'push', 'origin', 'HEAD:refs/heads/main'])
-    run(['gh', 'release', 'edit', tag, '--repo', repository, '--draft=false', '--prerelease',
-         '--target', source_commit, '--title', 'wubuGO ' + tag + ' development candidate',
-         '--notes-file', str(staging / 'release-notes.md')])
 
 
 def main():
