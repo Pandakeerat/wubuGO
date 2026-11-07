@@ -1,0 +1,17 @@
+{
+  "version": "wubuGO 6.0.0",
+  "release": "2026-11-06",
+  "description": "Locally bundled reference, MIGI, HUD and menu assets; no game or third-party injectors",
+  "sha256": {
+    "data/wubugo_offline_2016_subset.json": "8587a1940a77b57688bfde037ad53f4baf8615ab70b89d58ac845d01d458b3c8",
+    "assets/m_wubugo_2016/scripts/items/items_game_wubugo_2016.txt": "a24824dee4783d4a013375d9e25172d129a6a0b6fc09e0f264e7fc7c1d09a362",
+    "assets/wubugo_2016.cfg": "058dfbfa918e3b1c142d52fd1cd1d8b19e40d233e06ba14df6ece3c9253f630e",
+    "templates/wubugo_2016.css": "651ae6ff0d4e32ffec70fd0e0940e05f6f58919cc5457cb824e977c9ff7a1ff5",
+    "templates/wubugo_menu.xml": "4039c64f13d59dec053ef0adb1aa587ee889824821f401f3bf86956cbb12f0b9",
+    "data/weapons-1.35.4.4.json": "3f953c057bfa83ebdbec79229c939aa80a6c3b69fc090c31b076fa01516356cd",
+    "data/weapons-1.35.4.4.source.json": "56ae09a74533fcf65f1d642ff70b956665438542e89de98ece4bbdfd72cf0755",
+    "data/bridge_dependencies.json": "538c7118b68645ba5c916ea4da98a52aed5d87561a6971b5820dfe468fa3b980",
+    "assets/logo.png": "dffc9b0af676ea5775671f538c8435b6e97fa09e3029db1848e359670f1c3bcf",
+    "assets/logo.ico": "a415cf4a63ecfc5bd07532ce0aaefca8c2ae2e74a800ba6af9052eca6928ef8a"
+  }
+}

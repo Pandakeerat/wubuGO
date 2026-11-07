@@ -1,0 +1,15 @@
+{
+  "ok": true,
+  "platform": "Windows x64",
+  "tests": [
+    "silent install",
+    "path with spaces",
+    "per-user uninstall registration",
+    "Start-menu shortcut",
+    "installed GUI self-test without Python on PATH",
+    "repeat install",
+    "silent uninstall",
+    "user state retained"
+  ],
+  "game_started": false
+}

@@ -1,0 +1,5 @@
+* text=auto eol=lf
+*.png binary
+*.ico binary
+# Historical source checksum is over exact upstream bytes.
+data/weapons-1.35.4.4.json -text

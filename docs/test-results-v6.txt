@@ -1,0 +1,89 @@
+test_manifest_cannot_read_outside_bundle (test_assets.AssetTests.test_manifest_cannot_read_outside_bundle) ... ok
+test_missing_or_malformed_manifest_is_actionable (test_assets.AssetTests.test_missing_or_malformed_manifest_is_actionable) ... ok
+test_cancel_before_publish (test_downloads.DownloadsTests.test_cancel_before_publish) ... ok
+test_closed_manager_rejects_new_downloads (test_downloads.DownloadsTests.test_closed_manager_rejects_new_downloads) ... ok
+test_digest_mismatch_never_publishes (test_downloads.DownloadsTests.test_digest_mismatch_never_publishes) ... ok
+test_existing_files_never_overwritten (test_downloads.DownloadsTests.test_existing_files_never_overwritten) ... ok
+test_external_collision_during_download_never_overwritten (test_downloads.DownloadsTests.test_external_collision_during_download_never_overwritten) ... ok
+test_inflight_progress_and_queue_cancellation (test_downloads.DownloadsTests.test_inflight_progress_and_queue_cancellation) ... ok
+test_init_and_history_do_not_use_network (test_downloads.DownloadsTests.test_init_and_history_do_not_use_network) ... ok
+test_interrupted_history_is_not_resumed (test_downloads.DownloadsTests.test_interrupted_history_is_not_resumed) ... ok
+test_invalid_urls_names_sizes_and_checksums (test_downloads.DownloadsTests.test_invalid_urls_names_sizes_and_checksums) ... ok
+test_redirect_downgrade_is_rejected (test_downloads.DownloadsTests.test_redirect_downgrade_is_rejected) ... ok
+test_size_mismatch_fails (test_downloads.DownloadsTests.test_size_mismatch_fails) ... ok
+test_truncated_and_oversized_downloads_fail (test_downloads.DownloadsTests.test_truncated_and_oversized_downloads_fail) ... ok
+test_unknown_length_without_digest_is_explicitly_unverified (test_downloads.DownloadsTests.test_unknown_length_without_digest_is_explicitly_unverified) ... ok
+test_verified_download_progress_and_history (test_downloads.DownloadsTests.test_verified_download_progress_and_history) ... ok
+test_check_and_stage_never_execute (test_downloads.UpdateTests.test_check_and_stage_never_execute) ... ok
+test_no_newer_release (test_downloads.UpdateTests.test_no_newer_release) ... ok
+test_reject_untrusted_hosts_missing_digest_and_invalid_version (test_downloads.UpdateTests.test_reject_untrusted_hosts_missing_digest_and_invalid_version) ... ok
+test_baseline_detects_changes_and_is_not_official (test_game_core.GameCoreTests.test_baseline_detects_changes_and_is_not_official) ... ok
+test_cs2_only_rejected (test_game_core.GameCoreTests.test_cs2_only_rejected) ... ok
+test_discovery_reads_manifest_and_extra_library (test_game_core.GameCoreTests.test_discovery_reads_manifest_and_extra_library) ... ok
+test_malformed_manifest_cannot_escape_library (test_game_core.GameCoreTests.test_malformed_manifest_cannot_escape_library) ... ok
+test_malicious_baseline_blocked (test_game_core.GameCoreTests.test_malicious_baseline_blocked) ... ok
+test_publication_failure_recovers_previous_addon (test_game_core.GameCoreTests.test_publication_failure_recovers_previous_addon) ... ok
+test_running_game_blocks_profile_write (test_game_core.GameCoreTests.test_running_game_blocks_profile_write) ... ok
+test_symlink_cfg_escape_is_blocked (test_game_core.GameCoreTests.test_symlink_cfg_escape_is_blocked) ... ok
+test_windows_build_requires_explicit_proton (test_game_core.GameCoreTests.test_windows_build_requires_explicit_proton) ... ok
+test_windows_launch_uses_exe_and_tasklist_guard (test_game_core.GameCoreTests.test_windows_launch_uses_exe_and_tasklist_guard) ... ok
+test_latest_addon_rollback_keeps_modified_copy (test_hardening.HardeningTests.test_latest_addon_rollback_keeps_modified_copy) ... ok
+test_overrides_blocked (test_hardening.HardeningTests.test_overrides_blocked) ... ok
+test_profile_rollback_and_edit_protection (test_hardening.HardeningTests.test_profile_rollback_and_edit_protection) ... ok
+test_unsafe_windows_paths_preserve_empty_destination (test_hardening.HardeningTests.test_unsafe_windows_paths_preserve_empty_destination) ... ok
+test_zip_layouts (test_hardening.HardeningTests.test_zip_layouts) ... ok
+test_bridge_invalid_config_is_actionable (test_integration.IntegrationTests.test_bridge_invalid_config_is_actionable) ... ok
+test_bridge_reports_platform_and_missing_files (test_integration.IntegrationTests.test_bridge_reports_platform_and_missing_files) ... ok
+test_bridge_restore_failure_keeps_current (test_integration.IntegrationTests.test_bridge_restore_failure_keeps_current) ... ok
+test_dependencies_are_explicit_pins (test_integration.IntegrationTests.test_dependencies_are_explicit_pins) ... ok
+test_existing_patch_output_is_protected (test_integration.IntegrationTests.test_existing_patch_output_is_protected) ... ok
+test_full_bundle_provenance_and_all_firearms (test_integration.IntegrationTests.test_full_bundle_provenance_and_all_firearms) ... ok
+test_full_bundle_tampering_is_detected (test_integration.IntegrationTests.test_full_bundle_tampering_is_detected) ... ok
+test_menu_launch_buttons_stay_local (test_integration.IntegrationTests.test_menu_launch_buttons_stay_local) ... ok
+test_existing_install_is_not_overwritten (test_packaging.PackagingTests.test_existing_install_is_not_overwritten) ... ok
+test_existing_shortcut_is_not_overwritten (test_packaging.PackagingTests.test_existing_shortcut_is_not_overwritten) ... ok
+test_install_and_uninstall_preserve_user_data (test_packaging.PackagingTests.test_install_and_uninstall_preserve_user_data) ... ok
+test_modified_shortcut_survives_uninstall (test_packaging.PackagingTests.test_modified_shortcut_survives_uninstall) ... ok
+test_uninstaller_refuses_source_copy (test_packaging.PackagingTests.test_uninstaller_refuses_source_copy) ... ok
+test_atomic_settings_and_corrupt_recovery (test_preferences.PreferencesTests.test_atomic_settings_and_corrupt_recovery) ... ok
+test_backup_checksum_tampering_is_blocked (test_preferences.PreferencesTests.test_backup_checksum_tampering_is_blocked) ... ok
+test_launcher_refuses_edited_or_untracked_cfg (test_preferences.PreferencesTests.test_launcher_refuses_edited_or_untracked_cfg) ... ok
+test_link_escape (test_preferences.PreferencesTests.test_link_escape) ... ok
+test_many_preference_versions_and_rollbacks (test_preferences.PreferencesTests.test_many_preference_versions_and_rollbacks) ... ok
+test_metadata_failure_restores_previous_preferences (test_preferences.PreferencesTests.test_metadata_failure_restores_previous_preferences) ... ok
+test_original_foreign_file_preserved (test_preferences.PreferencesTests.test_original_foreign_file_preserved) ... ok
+test_preferences_restore (test_preferences.PreferencesTests.test_preferences_restore) ... ok
+test_reject_cfg_injection_and_invalid_values (test_preferences.PreferencesTests.test_reject_cfg_injection_and_invalid_values) ... ok
+test_retained_header_does_not_prove_ownership (test_preferences.PreferencesTests.test_retained_header_does_not_prove_ownership) ... ok
+test_running_game_blocks_preferences (test_preferences.PreferencesTests.test_running_game_blocks_preferences) ... ok
+test_fragmented_frames_preserve_protocol (test_presence.PresenceTests.test_fragmented_frames_preserve_protocol) ... ok
+test_handshake_activity_ping_and_close (test_presence.PresenceTests.test_handshake_activity_ping_and_close) ... ok
+test_linux_flatpak_paths (test_presence.PresenceTests.test_linux_flatpak_paths) ... ok
+test_missing_desktop_is_actionable_and_close_interrupts_retry (test_presence.PresenceTests.test_missing_desktop_is_actionable_and_close_interrupts_retry) ... ok
+test_opt_in_no_connection_until_started (test_presence.PresenceTests.test_opt_in_no_connection_until_started) ... ok
+test_oversized_peer_rejected_before_allocation (test_presence.PresenceTests.test_oversized_peer_rejected_before_allocation) ... ok
+test_requires_application_id_not_token (test_presence.PresenceTests.test_requires_application_id_not_token) ... ok
+test_bridge_import_offline (test_studio.StudioTests.test_bridge_import_offline) ... ok
+test_bundled_asset_integrity (test_studio.StudioTests.test_bundled_asset_integrity) ... ok
+test_full_source_supplies_dual_berettas_magazine (test_studio.StudioTests.test_full_source_supplies_dual_berettas_magazine) ... ok
+test_game_launch_command_insecure (test_studio.StudioTests.test_game_launch_command_insecure) ... ok
+test_in_game_menu_patch_backup_restore (test_studio.StudioTests.test_in_game_menu_patch_backup_restore) ... ok
+test_migi_addon_filename_according_to_docs (test_studio.StudioTests.test_migi_addon_filename_according_to_docs) ... ok
+test_migi_install_and_backup (test_studio.StudioTests.test_migi_install_and_backup) ... ok
+test_no_network_on_setup (test_studio.StudioTests.test_no_network_on_setup) ... ok
+test_offline_bundle_validation (test_studio.StudioTests.test_offline_bundle_validation) ... ok
+test_prebuilt_assets (test_studio.StudioTests.test_prebuilt_assets) ... ok
+test_reject_2023_economy_schema (test_studio.StudioTests.test_reject_2023_economy_schema) ... ok
+test_reject_duplicate_weapon (test_studio.StudioTests.test_reject_duplicate_weapon) ... ok
+test_steam_folder_and_hud_cfg_idempotence (test_studio.StudioTests.test_steam_folder_and_hud_cfg_idempotence) ... ok
+test_weapon_addon_generated_from_bundled_data (test_studio.StudioTests.test_weapon_addon_generated_from_bundled_data) ... ok
+test_zip_traversal_blocked (test_studio.StudioTests.test_zip_traversal_blocked) ... ok
+
+----------------------------------------------------------------------
+Ran 80 tests in 0.469s
+
+OK
+Starting: /tmp/tmpsitanjdy/proton run /tmp/tmpsitanjdy/game/csgo.exe -steam -insecure -console -novid +sv_lan 1 +map de_dust2
+Starting: /tmp/tmpey37s6lf/game/csgo.exe -steam -insecure -console -novid -worldwide +sv_lan 1 +map de_dust2
+Starting: /tmp/tmp3xkpbpyu/game/csgo_linux64 -steam -insecure -console -novid +sv_lan 1 +map de_dust2
+Starting: /tmp/tmplb2yfta4/csgo legacy/csgo_linux64 -steam -insecure -console -novid +sv_lan 1 +map de_dust2

@@ -1,0 +1,104 @@
+name: Build and test installers
+on:
+  workflow_dispatch:
+    inputs:
+      publish_release:
+        description: Publish the existing draft release after both native acceptance jobs pass
+        type: boolean
+        default: false
+      release_tag:
+        description: Existing draft release tag matching this app version
+        type: string
+        default: v6.0.0-rc.1
+  pull_request:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-2025
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          architecture: x64
+      - name: Build bundled executable and installer
+        shell: pwsh
+        run: ./packaging/build.ps1
+      - name: Test native installer and recovery of user state
+        shell: pwsh
+        run: ./packaging/smoke-windows.ps1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wubuGO-windows-x64
+          path: |
+            dist/*windows-x64*.exe
+            dist/*windows-x64*.zip
+            dist/SHA256SUMS
+            dist/*selftest.json
+            dist/installer-smoke.json
+            dist/installer-test.log
+          if-no-files-found: error
+  publish:
+    if: github.event_name == 'workflow_dispatch' && inputs.publish_release && github.ref == 'refs/heads/main'
+    needs: [windows, fedora]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    concurrency:
+      group: wubugo-release-publisher
+      cancel-in-progress: false
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          name: wubuGO-windows-x64
+          path: .release-input/windows
+      - uses: actions/download-artifact@v4
+        with:
+          name: wubuGO-fedora-x64
+          path: .release-input/fedora
+      - name: Prepare native assets, checksums and update manifest
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: >-
+          python3 packaging/prepare_release.py
+          --windows .release-input/windows --fedora .release-input/fedora
+          --output .release-stage --repository "$GITHUB_REPOSITORY"
+          --tag "$RELEASE_TAG" --source-commit "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID"
+      - name: Upload draft assets, update feed and publish prerelease
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: >-
+          python3 packaging/publish_release.py --staging .release-stage
+          --repository "$GITHUB_REPOSITORY" --tag "$RELEASE_TAG" --source-commit "$GITHUB_SHA"
+  fedora:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    container: fedora:43
+    steps:
+      - name: Install build dependencies
+        run: dnf install -y git python3-devel python3-pip python3-tkinter binutils rpm-build tar gzip gcc xorg-x11-server-Xvfb xorg-x11-xauth
+      - uses: actions/checkout@v4
+      - name: Build bundled portable archive and RPM
+        run: bash packaging/build-linux.sh
+      - name: Test native RPM and portable installation
+        run: bash packaging/smoke-fedora.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wubuGO-fedora-x64
+          path: |
+            dist/*linux-x64*.tar.gz
+            dist/*.rpm
+            dist/SHA256SUMS
+            dist/*selftest.json
+            dist/installer-smoke.json
+          if-no-files-found: error

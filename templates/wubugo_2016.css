@@ -1,0 +1,24 @@
+/* wubuGO 2016 look for legacy CS:GO Panorama; not genuine Scaleform. */
+.Retro2016Panel {
+    width: 328px;
+    height: 100%;
+    flow-children: down;
+    background-color: gradient(linear, 0% 0%, 100% 0%, from(#1a2938ee), to(#0d1929e8));
+    border-right: 2px solid #FFCE9F;
+    padding: 42px 28px;
+    vertical-align: top;
+    horizontal-align: left;
+    z-index: 150;
+}
+.Retro2016Title { color: #FFF5EA; font-size: 40px; font-weight: bold; margin-bottom: 3px; }
+.Retro2016Subtitle { color: #FFCE9F; font-size: 14px; letter-spacing: 2px; margin-bottom: 40px; }
+.Retro2016Button {
+    width: 270px; height: 52px;
+    padding: 12px 15px;
+    background-color: #293f4cae;
+    border-bottom: 1px solid #506777;
+    margin-bottom: 8px;
+}
+.Retro2016Button:hover { background-color: #FFCE9F; }
+.Retro2016Button Label { font-size: 23px; color: #1A1B1E; font-weight: bold; }
+.Retro2016Foot { font-size: 13px; color: #adbac3; margin-top: 30px; }

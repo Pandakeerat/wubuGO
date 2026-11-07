@@ -1,0 +1,27 @@
+test_latest_addon_rollback_keeps_modified_copy (test_hardening.HardeningTests.test_latest_addon_rollback_keeps_modified_copy) ... ok
+test_overrides_blocked (test_hardening.HardeningTests.test_overrides_blocked) ... ok
+test_profile_rollback_and_edit_protection (test_hardening.HardeningTests.test_profile_rollback_and_edit_protection) ... ok
+test_unsafe_windows_paths_preserve_empty_destination (test_hardening.HardeningTests.test_unsafe_windows_paths_preserve_empty_destination) ... ok
+test_zip_layouts (test_hardening.HardeningTests.test_zip_layouts) ... ok
+test_bridge_import_offline (test_studio.StudioTests.test_bridge_import_offline) ... ok
+test_bundled_asset_integrity (test_studio.StudioTests.test_bundled_asset_integrity) ... ok
+test_game_launch_command_insecure (test_studio.StudioTests.test_game_launch_command_insecure) ... ok
+test_in_game_menu_patch_backup_restore (test_studio.StudioTests.test_in_game_menu_patch_backup_restore) ... ok
+test_migi_addon_filename_according_to_docs (test_studio.StudioTests.test_migi_addon_filename_according_to_docs) ... ok
+test_migi_install_and_backup (test_studio.StudioTests.test_migi_install_and_backup) ... ok
+test_no_network_on_setup (test_studio.StudioTests.test_no_network_on_setup) ... ok
+test_offline_bundle_validation (test_studio.StudioTests.test_offline_bundle_validation) ... ok
+test_prebuilt_assets (test_studio.StudioTests.test_prebuilt_assets) ... ok
+test_reject_2023_economy_schema (test_studio.StudioTests.test_reject_2023_economy_schema) ... ok
+test_reject_duplicate_weapon (test_studio.StudioTests.test_reject_duplicate_weapon) ... ok
+test_steam_folder_and_hud_cfg_idempotence (test_studio.StudioTests.test_steam_folder_and_hud_cfg_idempotence) ... ok
+test_unverified_fields_absent_not_guessed (test_studio.StudioTests.test_unverified_fields_absent_not_guessed) ... ok
+test_weapon_addon_generated_from_bundled_data (test_studio.StudioTests.test_weapon_addon_generated_from_bundled_data) ... ok
+test_zip_traversal_blocked (test_studio.StudioTests.test_zip_traversal_blocked) ... ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 0.034s
+
+OK
+Starting: /tmp/tmptvdsk0zu/game/csgo.exe -steam -insecure -console -novid +sv_lan 1 +map de_dust2
+Starting: /tmp/tmpdpvo5ak0/csgo legacy/csgo.exe -steam -insecure -console -novid +sv_lan 1 +map de_dust2

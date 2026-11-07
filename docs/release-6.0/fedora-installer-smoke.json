@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "platform": "Fedora x86_64",
+  "game_started": false,
+  "tests": [
+    "portable archive extraction",
+    "per-user install",
+    "path with spaces",
+    "installed GUI self-test",
+    "per-user uninstall",
+    "RPM install",
+    "RPM GUI self-test",
+    "RPM uninstall",
+    "user state retained"
+  ]
+}
