@@ -6,7 +6,7 @@ import sys
 import tempfile
 from pathlib import Path
 
-VERSION = '6.0.0'
+VERSION = '6.0.1'
 DEFAULT_UPDATE_MANIFEST = 'https://raw.githubusercontent.com/wubu-codink/wubuGO/main/releases/update-manifest.json'
 DEFAULT_UPDATE_HOSTS = 'github.com'
 

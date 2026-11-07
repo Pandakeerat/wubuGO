@@ -20,6 +20,7 @@ from .panorama_ui import patch_files, patch_zip, install_to_bridge, restore_brid
 from .schema_audit import audit
 from .weapon_balance import generate, create_2016_addon
 from .sources import download_2016, validate_2016
+from .external_process import popen_external, run_external, external_environment
 
 APP_ID = '4465480'
 CFG_NAME = 'wubugo_2016.cfg'
@@ -79,7 +80,7 @@ def running_game_processes():
     """Return visible CS:GO processes. Unknown process status fails closed on writes."""
     if os.name == 'nt':
         try:
-            output = subprocess.run(['tasklist', '/FO', 'CSV', '/NH'], capture_output=True,
+            output = run_external(['tasklist', '/FO', 'CSV', '/NH'], capture_output=True,
                                     text=True, timeout=8, check=True).stdout
             return [row[0] for row in csv.reader(io.StringIO(output)) if row and
                     row[0].lower() in {'csgo.exe', 'csgo_linux', 'csgo_linux64'}]
@@ -332,6 +333,10 @@ def launch(root, use_migi=False, extra=(), proton=None):
     args += ['+sv_lan', '1']
     args.extend(safe_extra or ['+map', 'de_dust2'])
     env = None
+    if os.name == 'nt':
+        env = external_environment()
+        if (root / 'bin').is_dir():
+            env['PATH'] = str(root / 'bin') + ';' + env.get('PATH', '')
     if os.name != 'nt' and exe.suffix.lower() == '.exe':
         if not proton:
             raise ValueError('This is a Windows CS:GO build. Select your installed Proton executable in Settings, or select a native Linux game build.')
@@ -355,7 +360,7 @@ def launch(root, use_migi=False, extra=(), proton=None):
             raise ValueError('Native CS:GO launcher is not executable. Repair the game through Steam.')
         cmd = [str(exe), *args]
     print('Starting:', subprocess.list2cmdline(cmd) if os.name == 'nt' else ' '.join(cmd))
-    return subprocess.Popen(cmd, cwd=str(root), **({'env': env} if env is not None else {}))
+    return popen_external(cmd, cwd=str(root), env=env)
 
 
 def main(argv=None):

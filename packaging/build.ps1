@@ -13,6 +13,7 @@ try {
     if ($LASTEXITCODE -ne 0) { throw 'Tcl/Tk is missing from build Python.' }
     & $Python -m unittest discover -s tests -v
     if ($LASTEXITCODE -ne 0) { throw 'Tests failed; refusing release build.' }
+    . (Join-Path $PSScriptRoot 'build-loader-fixture.ps1')
     & $Python -m PyInstaller --clean --noconfirm packaging\wubuGO.spec
     if ($LASTEXITCODE -ne 0) { throw 'PyInstaller failed.' }
     & $Python packaging\collect_licenses.py dist\wubuGO
@@ -22,7 +23,7 @@ try {
     if ($Smoke.ExitCode -ne 0 -or !(Test-Path -LiteralPath $Report)) { throw 'Frozen GUI self-test failed.' }
     $Result = Get-Content -LiteralPath $Report -Raw | ConvertFrom-Json
     if ($Result.ok -ne $true) { throw 'Frozen GUI self-test reported a failure.' }
-    Compress-Archive -Path dist\wubuGO -DestinationPath dist\wubuGO-6.0.0-windows-x64-portable.zip -Force
+    Compress-Archive -Path dist\wubuGO -DestinationPath dist\wubuGO-6.0.1-windows-x64-portable.zip -Force
     if (!$SkipInstaller) {
         $Compiler = Get-Command ISCC.exe -ErrorAction SilentlyContinue
         if ($Compiler) { $Iscc = $Compiler.Source }

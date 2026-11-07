@@ -7,7 +7,7 @@ import unittest
 from unittest.mock import Mock, patch
 from launcher.app import Studio
 from launcher.pages import ExtraPages
-from launcher.runtime import DEFAULT_UPDATE_MANIFEST, DEFAULT_UPDATE_HOSTS
+from launcher.runtime import VERSION, DEFAULT_UPDATE_MANIFEST, DEFAULT_UPDATE_HOSTS
 from modkit.game_settings import install_settings, read_installed_settings
 from test_studio import fake_game
 
@@ -59,7 +59,7 @@ class UIStateTests(unittest.TestCase):
         with patch('modkit.downloads.check_update',return_value={'version':'6.0.0','available':False}) as check, \
              patch('launcher.pages.atomic_json') as save:
             ExtraPages.check_app_update(app)
-        check.assert_called_once_with(DEFAULT_UPDATE_MANIFEST,current_version='6.0.0',
+        check.assert_called_once_with(DEFAULT_UPDATE_MANIFEST,current_version=VERSION,
                                       trusted_hosts={'raw.githubusercontent.com',DEFAULT_UPDATE_HOSTS})
         save.assert_called_once()
 

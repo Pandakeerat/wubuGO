@@ -107,4 +107,10 @@ class GameCoreTests(unittest.TestCase):
             self.assertIn('-insecure',cmd)
             self.assertEqual(proc.call_args.kwargs['env']['SteamAppId'],'4465480')
 
-if __name__=='__main__':unittest.main()
+    def test_windows_game_bin_precedes_other_library_paths(self):
+        game=fake_game(self.root/'game');(game/'bin').mkdir()
+        with patch.object(retrokit,'os',SimpleNamespace(name='nt')), \
+             patch.object(retrokit,'running_game_processes',return_value=[]), \
+             patch.object(retrokit.subprocess,'Popen') as proc:
+            retrokit.launch(game)
+            self.assertTrue(proc.call_args.kwargs['env']['PATH'].startswith(str(game/'bin')+';'))

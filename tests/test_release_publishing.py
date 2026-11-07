@@ -151,7 +151,7 @@ class PreparationTests(unittest.TestCase):
             self.fedora: ['wubuGO-6.0.0-linux-x64-portable.tar.gz', 'wubugo-6.0.0-1.fc43.x86_64.rpm'],
         }
         gui = {'ok': True, 'game_started': False, 'network_used': False, 'isolated_state': True,
-               'generated_weapons': 33, 'pages': sorted(prepare.PAGES), 'assets': {'ok': True}}
+               'generated_weapons': 33, 'pages': sorted(prepare.PAGES), 'assets': {'ok': True},'external_process': {'loader_isolation_verified':True}}
         for directory, names in self.names.items():
             for name in names: (directory / name).write_bytes(name.encode())
             (directory / 'SHA256SUMS').write_text(''.join(
