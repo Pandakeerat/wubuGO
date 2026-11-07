@@ -1,0 +1,47 @@
+name: Build and test installers
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-2025
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          architecture: x64
+      - name: Build bundled executable and installer
+        shell: pwsh
+        run: ./packaging/build.ps1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wubuGO-windows-x64
+          path: |
+            dist/*windows-x64*.exe
+            dist/*windows-x64*.zip
+            dist/SHA256SUMS
+            dist/frozen-selftest.json
+          if-no-files-found: error
+  fedora:
+    runs-on: ubuntu-24.04
+    container: fedora:43
+    steps:
+      - name: Install build dependencies
+        run: dnf install -y git python3-devel python3-pip python3-tkinter binutils rpm-build tar gzip gcc xorg-x11-server-Xvfb xorg-x11-xauth
+      - uses: actions/checkout@v4
+      - name: Build bundled portable archive and RPM
+        run: bash packaging/build-linux.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wubuGO-fedora-x64
+          path: |
+            dist/*linux-x64*.tar.gz
+            dist/*.rpm
+            dist/SHA256SUMS
+            dist/frozen-selftest.json
+          if-no-files-found: error

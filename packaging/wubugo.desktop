@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=wubuGO
+Comment=CS:GO offline mod manager
+Exec=/opt/wubugo/wubuGO
+Icon=wubugo
+Terminal=false
+Categories=Game;Utility;
+StartupWMClass=wubuGO

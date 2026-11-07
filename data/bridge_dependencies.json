@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "reviewed_bridge_commit": "b76af33d3f39aecd774cc21e7088e6bdaa0017e9",
+  "reviewed_utc": "2026-11-06",
+  "notes": "Pinned upstream-tested versions, not a claim of latest releases. Third-party licenses and runtime compatibility must be reviewed before redistribution or execution. Files are optional and never executed automatically.",
+  "dependencies": [
+    {
+      "id": "migi",
+      "name": "MIGI3 (Windows only)",
+      "filename": "migi.exe",
+      "url": "https://raw.githubusercontent.com/ZooLSmith/MIGI3/8811529ee5a919f481119ee8f131368e82081c1f/migi.exe",
+      "sha256": "091c500a3915a00219843026b7e33c287b1dfc1381230d51e427372fe61587d3",
+      "platforms": [
+        "win32"
+      ],
+      "installed_relative": "migi.exe"
+    },
+    {
+      "id": "scaleform-ui",
+      "name": "Scaleform-style Panorama addon",
+      "filename": "scaleform-ui-2c45e6b.zip",
+      "url": "https://codeload.github.com/awfeel7/Scaleform-UI-CSGO/zip/2c45e6b269e5b1c0a37f46b433749b12ede0744e",
+      "sha256": "e6c14fe8f04c0e961a488fef99c56d511ed79d2e64de7388ad2547167ed63446",
+      "platforms": [
+        "win32"
+      ]
+    },
+    {
+      "id": "scaleform-resources",
+      "name": "Scaleform-style resource archive",
+      "filename": "scaleform-resources-3e4c1f2.zip",
+      "url": "https://codeload.github.com/abandonedpools/scaleform/zip/3e4c1f244351844a6236d952356ea087f59ad29e",
+      "sha256": "e2215e9d8745a763cf058f3d1820ee937563e6a1dd459d0d940267df82f1fd73",
+      "platforms": [
+        "win32"
+      ]
+    }
+  ]
+}

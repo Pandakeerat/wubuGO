@@ -1,0 +1,9 @@
+{
+  "source_url": "https://raw.githubusercontent.com/twowordbird/csgo-weapon-json-output/16cf45aa6e77a440a698ac0fc3df4c23f839aa38/weapons-1.35.4.4.json",
+  "source_repo": "twowordbird/csgo-weapon-json-output",
+  "source_commit": "16cf45aa6e77a440a698ac0fc3df4c23f839aa38",
+  "sha256": "3f953c057bfa83ebdbec79229c939aa80a6c3b69fc090c31b076fa01516356cd",
+  "retrieved_utc": "2026-11-06",
+  "description": "Upstream extracted historical 1.35.4.4 numeric weapon-stat snapshot. Complete 33 mapped firearms; this is source coverage, not an engine verification. Model path strings refer to user-owned game assets; no models/binaries bundled.",
+  "in_game_verified": false
+}

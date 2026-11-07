@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+config/user_settings.json
+build/
+third_party/
+
+.build-venv/
+dist/
+*.egg-info/

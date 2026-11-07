@@ -1,0 +1,9 @@
+# Build-time only; installed app needs no pip or runtime setup step.
+pyinstaller==6.20.0
+pyinstaller-hooks-contrib==2026.9
+altgraph==0.17.5
+packaging==25.0
+setuptools==84.2.1
+# Native Windows analysis dependencies:
+pefile==2024.8.26; sys_platform == 'win32'
+pywin32-ctypes==0.2.3; sys_platform == 'win32'

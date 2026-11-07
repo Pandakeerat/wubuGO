@@ -1,0 +1,18 @@
+{
+  "filename": "data/user_supplied_items_game_2023.txt",
+  "total_items": 24,
+  "weapon_item_count": 0,
+  "weapon_examples": [],
+  "post_2016_markers": [
+    "paris2023",
+    "rio2022",
+    "stockh2021",
+    "berlin2019",
+    "katowice2019"
+  ],
+  "suitable_as_2016_weapon_source": false,
+  "notes": [
+    "No named weapon_ item definitions in items section; no weapon statistics can be imported.",
+    "References to post-2016 events exist: paris2023, rio2022, stockh2021, berlin2019, katowice2019."
+  ]
+}

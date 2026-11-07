@@ -1,0 +1,3 @@
+Fontconfig error: No writable cache directories
+Starting: /tmp/tmpycmnyl2s/game/csgo_linux64 -steam -insecure -console -novid +exec wubugo_preferences.cfg +sv_lan 1 +map de_dust2
+PASS: nine pages; offline setup; preferences; rollback; integrity baseline; staged download rows; native local launch.

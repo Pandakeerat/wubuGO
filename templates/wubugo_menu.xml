@@ -1,0 +1,12 @@
+<!-- wubuGO 2016 LOOK overlay; active inside Panorama when archive loader works -->
+<Panel id="Retro2016MenuPanel" class="Retro2016Panel MainMenuModeOnly" hittest="true">
+    <Label class="Retro2016Title" text="COUNTER-STRIKE" />
+    <Label class="Retro2016Subtitle" text="GLOBAL OFFENSIVE / 2016" />
+    <Button class="Retro2016Button" onactivate="$.DispatchEvent('OpenPlayMenu');"><Label text="PLAY" /></Button>
+    <Button class="Retro2016Button" onactivate="MainMenu.NavigateToTab('JsInventory', 'mainmenu_inventory');"><Label text="INVENTORY" /></Button>
+    <Button class="Retro2016Button" onactivate="MainMenu.NavigateToTab('JsWatch', 'mainmenu_watch'); MainMenu.WatchBtnPressedUpdateAlert();"><Label text="WATCH" /></Button>
+    <Button class="Retro2016Button" onactivate="MainMenu.NavigateToTab('JsPlayerStats', 'mainmenu_playerstats');"><Label text="AWARDS / STATS" /></Button>
+    <Button class="Retro2016Button" onactivate="MainMenu.NavigateToTab('JsSettings', 'settings/settings');"><Label text="OPTIONS" /></Button>
+    <Button class="Retro2016Button" onactivate="GameInterfaceAPI.ConsoleCommand('gamemenucommand openserverbrowser');"><Label text="SERVERS" /></Button>
+    <Label class="Retro2016Foot" text="WUBUGO | PRIVATE / OFFLINE" />
+</Panel>
