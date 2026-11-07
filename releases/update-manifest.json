@@ -1,18 +1,18 @@
 {
-  "version": "6.0.0",
+  "version": "6.0.1",
   "notes": "Windows and Fedora launcher/installer workflows passed native CI. In-game HUD, menu and weapon effects remain unverified.",
   "assets": {
     "windows-x64": {
-      "url": "https://github.com/wubu-codink/wubuGO/releases/download/v6.0.0-rc.1/wubuGO-6.0.0-windows-x64-setup.exe",
-      "filename": "wubuGO-6.0.0-windows-x64-setup.exe",
-      "sha256": "4947d98e59522d3f4248fc0ab8a06a6fd592eaf453dd8d63ee9abb409bc29a9b",
-      "size": 12905565
+      "url": "https://github.com/wubu-codink/wubuGO/releases/download/v6.0.1-rc.1/wubuGO-6.0.1-windows-x64-setup.exe",
+      "filename": "wubuGO-6.0.1-windows-x64-setup.exe",
+      "sha256": "bc9637bf1660e8b17c2fa6ed80f6ffe64164fe8ba457afe173e9277e0d640800",
+      "size": 12912405
     },
     "linux-x64": {
-      "url": "https://github.com/wubu-codink/wubuGO/releases/download/v6.0.0-rc.1/wubuGO-6.0.0-linux-x64-portable.tar.gz",
-      "filename": "wubuGO-6.0.0-linux-x64-portable.tar.gz",
-      "sha256": "07335955d14780d20ef263d81ee0d9ef932af826306847ab0783a1ee62c36c9e",
-      "size": 19280047
+      "url": "https://github.com/wubu-codink/wubuGO/releases/download/v6.0.1-rc.1/wubuGO-6.0.1-linux-x64-portable.tar.gz",
+      "filename": "wubuGO-6.0.1-linux-x64-portable.tar.gz",
+      "sha256": "c7ac19242c05b1760dc3ebe8099affed64d30c20a842cf0f96b484c46e4bbdc3",
+      "size": 19292362
     }
   }
 }
